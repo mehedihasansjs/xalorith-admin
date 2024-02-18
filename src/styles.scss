@@ -1,3 +1,4 @@
+@use "assets/icons/fontawesome-free-6.5.1-web/css/all.min.css";
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
@@ -37,5 +38,18 @@ $xalorith-admin-theme: mat.define-light-theme((
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@layer base {
+  html {
+    font-size: 14px;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
+  }
+}
