@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { AuthManager, ConfigManager, TokenManager } from '../../../../core';
 import { LoginRequest, LoginSubmission } from '../models';
 import { LoginResponse } from '../models/login-response';
@@ -47,10 +47,7 @@ export class LoginService {
     const url: string = `${baseUrl}/${endpoint.auth.login}`;
     return this._httpClient.post<LoginResponse>(url, request)
       .pipe(
-        tap((response: LoginResponse) => {
-          this._tokenManager.token = response.token;
-          this._authManager.isAuthenticated = true;
-        })
+        map((response: LoginResponse) => response.token)
       );
   }
 }

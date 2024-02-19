@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
     this._loginService.login(submission)
       .pipe(
-        tap(() => this._matDialogRef.close())
+        tap((token: string) => this._matDialogRef.close(token))
       )
       .subscribe();
   }

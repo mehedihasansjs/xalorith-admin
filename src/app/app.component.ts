@@ -1,4 +1,4 @@
-import { Component, effect, OnInit } from '@angular/core';
+import { Component, effect, OnInit, Signal } from '@angular/core';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterOutlet } from '@angular/router';
 import { tap } from 'rxjs';
@@ -15,7 +15,7 @@ import { LoginComponent } from './features/auth/login/login.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  protected authenticated = this._authManager.isAuthenticated;
+  protected authenticated: Signal<boolean> = this._authManager.isAuthenticated;
 
   constructor(
     private _authManager: AuthManager,
@@ -26,9 +26,19 @@ export class AppComponent implements OnInit {
   ) {
     effect(() => {
       if (!this.authenticated()) {
-        const loginDialogRef: MatDialogRef<LoginComponent, any> = this._matDialog.open(LoginComponent, {
-          hasBackdrop: false,
-        });
+        const loginDialogRef: MatDialogRef<LoginComponent, any> = this._matDialog.open(LoginComponent);
+
+        loginDialogRef
+          .afterClosed()
+          .pipe(
+            tap((token: string) => {
+              if (token) {
+                this._tokenManager.token = token;
+                this._authManager.isAuthenticated = true;
+              }
+            })
+          )
+          .subscribe();
       }
     });
   }
