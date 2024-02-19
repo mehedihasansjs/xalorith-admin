@@ -39,7 +39,6 @@ export class TextInputComponent {
   @Input() readonly: boolean = false;
   @Input() focusKeyBinding: string = 'F3';
   @Input() keyBindWithMeta: boolean = false;
-  @Input() showSuggestion: boolean = false;
   @Input() items: any[] = [];
   @Input() autoCompleteTemplate!: TemplateRef<any>;
 

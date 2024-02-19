@@ -53,3 +53,8 @@ $xalorith-admin-theme: mat.define-light-theme((
     font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
   }
 }
+
+.mdc-list-item__primary-text {
+  display: block;
+  width: 100%;
+}

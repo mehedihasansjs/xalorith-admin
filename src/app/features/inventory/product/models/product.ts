@@ -7,4 +7,5 @@ export class Product {
   stock?: number;
   isSingle?: boolean;
   parentId?: string | null;
+  discount?: number;
 }

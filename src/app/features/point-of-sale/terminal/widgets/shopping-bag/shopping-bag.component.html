@@ -1,0 +1,34 @@
+<table class="w-full border border-gray-100">
+  <thead>
+    <tr class="bg-green-100 text-left">
+      <th>Sl</th>
+      <th>Item</th>
+      <th>Price (BDT)</th>
+      <th>Qty</th>
+      <th>Disc.</th>
+      <th>Total (BDT)</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (product of products(); track product.id) {
+      <tr class="even:bg-gray-50 border-b border-gray-100">
+        <td>{{ $index }}</td>
+
+        <td>
+          <div>
+            <span>{{ product.name }}</span>
+            <span>{{ product?.stock ?? 0 }}</span>
+          </div>
+        </td>
+
+        <td>{{ product.price | currency: ' ' }}</td>
+        <td>{{ getQty(product?.id ?? '')() }}</td>
+        <td>0</td>
+        <td>{{ getTotal(product) }}</td>
+        <td></td>
+      </tr>
+    }
+  </tbody>
+</table>

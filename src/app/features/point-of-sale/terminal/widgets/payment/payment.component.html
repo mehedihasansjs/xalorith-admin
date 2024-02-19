@@ -1,0 +1,16 @@
+<div class="border border-gray-100 h-full p-2">
+  <div class="border-b border-gray-100 flex items-center justify-between py-4">
+    <span>Subtotal</span>
+    <span>{{ total() | currency: ' ' }}</span>
+  </div>
+
+  <div class="border-b border-gray-100 flex items-center justify-between py-4 text-red-600">
+    <span>Discount</span>
+    <span>{{ discount() | currency: ' ' }}</span>
+  </div>
+
+  <div class="border-b border-gray-100 flex items-center justify-between py-4 text-lg font-bold text-green-600">
+    <span>Total</span>
+    <span>{{ (total() - discount()) | currency: ' ' }}</span>
+  </div>
+</div>
