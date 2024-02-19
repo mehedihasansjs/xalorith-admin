@@ -1,3 +1,3 @@
-@if (authenticated()) {
+@if (hasToken() && authenticated()) {
     <router-outlet />
 }

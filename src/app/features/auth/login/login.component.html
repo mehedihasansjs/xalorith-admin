@@ -1,32 +1,47 @@
-<form class="w-96">
+<form class="w-96" [formGroup]="loginForm" (ngSubmit)="submit()">
   <div class="mb-4">
     <img ngSrc="/assets/images/login-banner.jpeg" width="2265" height="1500" alt="Bonik POS" priority="1" class="w-full h-32 object-center object-cover" />
   </div>
 
   <div class="mb-4 px-4">
-    <h1 class="text-2xl font-bold mb-2">Login to Bonik POS</h1>
+    <h1 class="text-2xl font-bold mb-2">Login</h1>
     <p class="text-sm text-gray-500">By logging in are accepting the terms and conditions of Xalorith ERP, as the Bonik POS is now part of Xalorith ERP, product of AITS Genesis.</p>
   </div>
 
   <div class="flex flex-col gap-4 px-4">
+    <!--  username -->
     <div class="flex flex-col">
-      <label class="font-bold">Username</label>
       <div class="relative">
-        <div class="absolute top-0 left-0 aspect-square flex items-center justify-center h-full bg-gray-200">
+        <div class="absolute top-0 left-0 aspect-square flex items-center justify-center h-full bg-gray-200 rounded-tl rounded-bl">
           <i class="fas fa-user"></i>
         </div>
-        <input type="text" class="w-full border-gray-200 hover:border-gray-300" />
+
+        <input formControlName="username" type="text" autocomplete="username" placeholder="Username" class="rounded pl-14 w-full pr-2 py-3 text-sm border-gray-200 hover:border-gray-300 focus:ring-0 focus:outline-none" />
       </div>
+
+      @if (loginForm.touched && loginForm.get('username')?.hasError('required')) {
+        <div class="text-red-500 text-xs mt-1">Username is required</div>
+      }
     </div>
 
+    <!--  password -->
     <div class="flex flex-col">
-      <label class="font-bold">Password</label>
-      <input type="password" />
+      <div class="relative">
+        <div class="absolute top-0 left-0 aspect-square flex items-center justify-center h-full bg-gray-200 rounded-tl rounded-bl">
+          <i class="fas fa-key"></i>
+        </div>
+
+        <input formControlName="password" type="password" autocomplete="current-password" placeholder="Password" class="rounded pl-14 w-full pr-2 py-3 text-sm border-gray-200 hover:border-gray-300 focus:ring-0 focus:outline-none" />
+      </div>
+
+      @if (loginForm.touched && loginForm.get('password')?.hasError('required')) {
+        <div class="text-red-500 text-xs mt-1">Username is required</div>
+      }
     </div>
   </div>
 
   <div class="my-4 px-4">
-      <button class="w-full bg-blue-500 text-white px-4 py-3 rounded mt-4 flex items-center gap-4 justify-center font-bold uppercase tracking-wider">
+      <button type="submit" class="w-full bg-blue-500 text-white px-4 py-3 rounded mt-4 flex items-center gap-4 justify-center font-bold uppercase tracking-wider">
           <i class="fas fa-arrow-right-to-bracket"></i>
           <span>Sign In</span>
       </button>

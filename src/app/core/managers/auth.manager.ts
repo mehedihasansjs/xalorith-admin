@@ -4,7 +4,7 @@ import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthManager {
-  private _isAuthenticated: WritableSignal<boolean> = signal<boolean>(false);
+  private _isAuthenticated: WritableSignal<boolean> = signal<boolean>(true);
 
   public get isAuthenticated(): Signal<boolean> {
     return this._isAuthenticated.asReadonly();
