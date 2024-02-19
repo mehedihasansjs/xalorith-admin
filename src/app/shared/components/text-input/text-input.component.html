@@ -1,0 +1,54 @@
+@if (control) {
+  <div class="flex flex-col">
+    <div class="relative">
+      @if (!!icon) {
+        <div class="absolute top-0 left-0 aspect-square flex items-center justify-center h-full bg-gray-200 rounded-tl rounded-bl">
+          <i class="fas fa-{{ icon }}"></i>
+        </div>
+      }
+
+      <input
+        #input
+        [disabled]="control.disabled"
+        [readOnly]="readonly"
+        [formControl]="control"
+        type="text"
+        [attr.autocomplete]="autoComplete"
+        [attr.placeholder]="placeholder"
+        [matAutocomplete]="autoCompleteDropdown"
+        class="w-full pr-2 pl-2 pt-1 pb-1 border-gray-200 hover:border-gray-300 focus:ring-0 focus:outline-none {{ classes }}"
+        [ngClass]="{
+           '!pl-10': !!icon,
+           'rounded': bordered
+        }"
+      />
+    </div>
+
+    @if (control.touched) {
+      <div class="text-red-500 text-xs mt-1">
+        @if (control.hasError('required')) {
+          <span>{{ label }} is required</span>
+        }
+
+        @if (control.hasError('minlength')) {
+          <span>{{ label }} must be at least {{ control.errors?.['minlength']?.['requiredLength'] }} characters</span>
+        }
+
+        @if (control.hasError('maxlength')) {
+          <span>{{ label }} must be at least {{ control.errors?.['maxlength']?.['requiredLength'] }} characters</span>
+        }
+      </div>
+    }
+  </div>
+}
+
+
+<mat-autocomplete #autoCompleteDropdown="matAutocomplete">
+  @for (item of items; track item.id) {
+    <mat-option (click)="itemSelected.emit(item.id)" [value]="item.id">
+      <ng-container *ngTemplateOutlet="autoCompleteTemplate; context: { $implicit: item }">
+        <ng-content/>
+      </ng-container>
+    </mat-option>
+  }
+</mat-autocomplete>
