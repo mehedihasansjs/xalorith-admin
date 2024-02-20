@@ -42,7 +42,11 @@
 
   <div class="my-4 px-4">
       <button type="submit" class="w-full bg-blue-500 text-white px-4 py-3 rounded mt-4 flex items-center gap-4 justify-center font-bold uppercase tracking-wider">
-          <i class="fas fa-arrow-right-to-bracket"></i>
+          @if (!loading) {
+            <i class="fas fa-arrow-right-to-bracket"></i>
+          } @else {
+            <i class="fas fa-spinner fa-spin animate-spin"></i>
+          }
           <span>Sign In</span>
       </button>
   </div>

@@ -1,5 +1,6 @@
 import { CurrencyPipe, JsonPipe } from '@angular/common';
 import { Component, effect, Signal } from '@angular/core';
+import { remove } from 'lodash-es';
 import { Product } from '../../../../inventory/product/models/product';
 import { ShoppingBagManager } from '../../managers/shopping-bag.manager';
 
@@ -37,5 +38,22 @@ export class ShoppingBagComponent {
   getTotal(product: Product) {
     const qty = this.getQty(product?.id ?? '');
     return (product?.price ?? 0) * qty();
+  }
+
+  increase(product: Product) {
+    this._shoppingBagManager.addProduct(product);
+  }
+
+  decrease(product: Product) {
+    this._shoppingBagManager.removeByOne(product);
+  }
+
+  remove(product: Product) {
+    this._shoppingBagManager.removeProduct(product);
+  }
+
+  getTotalDiscount(product: Product) {
+    const qty = this.getQty(product?.id ?? '');
+    return (product?.discount ?? 0) * qty();
   }
 }

@@ -1,6 +1,7 @@
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { uniqBy } from 'lodash-es';
 import { Product } from '../../../inventory/product/models/product';
+import { DiscountType } from '../enums/discount-type';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,35 @@ export class ShoppingBagManager {
 
     const products = this.products();
     localStorage.setItem('shopping-bag', JSON.stringify(products));
+  }
+
+  removeByOne(product: Product): void {
+    const products = this.products();
+    const index = products.findIndex((p) => p.id === product.id);
+    if (index !== -1) {
+      products.splice(index, 1);
+      this._products.set(products);
+      localStorage.setItem('shopping-bag', JSON.stringify(products));
+    }
+  }
+
+  applyDiscount(productId: string, discount: number, type: DiscountType = DiscountType.Percentage): void {
+    const products = this.products().filter((p) => p.id === productId);
+    if (products.length === 0) {
+      return;
+    }
+
+    products.forEach((p) => {
+      p.discount = discount;
+      p.discountType = type;
+
+      p.discountInAmount = 0;
+      if (type === DiscountType.Amount) {
+        p.discountInAmount = discount;
+      } else {
+        p.discountInAmount = (p.price ?? 0) * (discount / 100);
+      }
+    });
   }
 
   removeProduct(product: Product): void {

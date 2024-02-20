@@ -14,7 +14,7 @@
   <tbody>
     @for (product of products(); track product.id) {
       <tr class="even:bg-gray-50 border-b border-gray-100">
-        <td>{{ $index }}</td>
+        <td>{{ $index + 1 }}</td>
 
         <td>
           <div>
@@ -24,10 +24,36 @@
         </td>
 
         <td>{{ product.price | currency: ' ' }}</td>
-        <td>{{ getQty(product?.id ?? '')() }}</td>
-        <td>0</td>
-        <td>{{ getTotal(product) }}</td>
-        <td></td>
+        <td>
+          <div class="flex items-center gap-4">
+            <button type="button" (click)="decrease(product)" class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-100">
+              <i class="fas fa-minus"></i>
+            </button>
+
+            <span class="min-w-[5ch] text-center">{{ getQty(product?.id ?? '')() }}</span>
+
+            <button type="button" (click)="increase(product)" class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-100">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span>{{ getTotalDiscount(product) }}</span>
+
+            <div>
+              <button></button>
+            </div>
+          </div>
+        </td>
+        <td>{{ getTotal(product) | currency: ' ' }}</td>
+        <td>
+          <div>
+            <button (click)="remove(product)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </td>
       </tr>
     }
   </tbody>

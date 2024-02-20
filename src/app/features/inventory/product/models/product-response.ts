@@ -6,4 +6,5 @@ export class ProductResponse {
   price?: number;
   isSingle?: boolean;
   parentId?: number;
+  discount?: number;
 }

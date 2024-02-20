@@ -21,12 +21,13 @@ export class ProductService {
     return this._httpClient.get<ProductResponse[]>(url)
       .pipe(
         map(response => response.map(product => ({
-          id: product.id?.toString(),
-          name: getRidOfPrefix(product.name),
-          code: getRidOfPrefix(product.autoGenCode),
-          price: product.price,
-          isSingle: product.isSingle,
-          parentId: product.parentId?.toString() ?? null,
+          id: product?.id?.toString(),
+          name: getRidOfPrefix(product?.name),
+          code: getRidOfPrefix(product?.autoGenCode),
+          price: product?.price,
+          isSingle: product?.isSingle,
+          parentId: product?.parentId?.toString() ?? null,
+          discount: product?.discount ?? 0
         })))
       );
   }

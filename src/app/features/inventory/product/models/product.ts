@@ -1,3 +1,5 @@
+import { DiscountType } from '../../../point-of-sale/terminal/enums/discount-type';
+
 export class Product {
   id?: string;
   image?: string;
@@ -8,4 +10,6 @@ export class Product {
   isSingle?: boolean;
   parentId?: string | null;
   discount?: number;
+  discountType?: DiscountType;
+  discountInAmount?: number;
 }

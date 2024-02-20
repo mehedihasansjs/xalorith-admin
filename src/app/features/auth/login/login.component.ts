@@ -2,7 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { ILoginForm } from './interfaces';
 import { LoginForm, LoginSubmission } from './models';
 import { LoginService } from './services';
@@ -19,6 +19,7 @@ import { LoginService } from './services';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup<ILoginForm>;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     const value: LoginForm = this.loginForm.getRawValue();
     const submission: LoginSubmission = new LoginSubmission();
     submission.username = value.username;
@@ -52,7 +54,8 @@ export class LoginComponent implements OnInit {
 
     this._loginService.login(submission)
       .pipe(
-        tap((token: string) => this._matDialogRef.close(token))
+        tap((token: string) => this._matDialogRef.close(token)),
+        finalize(() => this.loading = false)
       )
       .subscribe();
   }
